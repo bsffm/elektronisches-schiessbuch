@@ -8,7 +8,6 @@
 #define SDFILE_PIN_CS   10
 #define RFID_D0          2
 #define RFID_D1          3
-#define DEBUG true
 
 RTC_DS1307 rtc;
 File sdFile;
@@ -49,8 +48,8 @@ void setup() {
   // initialize RFID input pins
   pinMode(RFID_D0, INPUT);
   pinMode(RFID_D1, INPUT);
-//  attachInterrupt(digitalPinToInterrupt(RFID_D0), pinStateChanged, CHANGE);
-//  attachInterrupt(digitalPinToInterrupt(RFID_D1), pinStateChanged, CHANGE);
+  //  attachInterrupt(digitalPinToInterrupt(RFID_D0), pinStateChanged, CHANGE);
+  //  attachInterrupt(digitalPinToInterrupt(RFID_D1), pinStateChanged, CHANGE);
   // send the initial pin state to the Wiegand library
   pinStateChanged();
 }
@@ -58,9 +57,9 @@ void setup() {
 // Every few milliseconds, check for pending messages on the wiegand reader
 // This executes with interruptions disabled, since the Wiegand library is not thread-safe
 void loop() {
-/*  //Sleep a little -- this doesn't have to run very often.
-  Serial.println("sleeping");
-  delay(1000);*/
+  /*  //Sleep a little -- this doesn't have to run very often.
+    Serial.println("sleeping");
+    delay(1000);*/
   wiegand.setPin0State(digitalRead(RFID_D0));
   wiegand.setPin1State(digitalRead(RFID_D1));
 }
@@ -96,7 +95,7 @@ void stateChanged(bool plugged, const char* message) {
 void receivedData(uint8_t* data, uint8_t bits, const char* message) {
   // create card serial from read data
   uint8_t bytes = (bits + 7) / 8;
-  char cardSerial[2*bytes+1];
+  char cardSerial[2 * bytes + 1];
   sprintf(cardSerial, "%x%x%x%x", data[0], data[1], data[2], data[3]);
   Serial.print("Serial: ");
   Serial.println(cardSerial);
