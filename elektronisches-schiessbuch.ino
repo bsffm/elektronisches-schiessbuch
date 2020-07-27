@@ -107,7 +107,7 @@ void receivedData(uint8_t* data, uint8_t bits, const char* message) {
   // create filename from timestamp
   sprintf(filename, "%04u%02u%02u.csv", now.year(), now.month(), now.day());
   // buffer for data entry into file
-  char entry[26];
+  char entry[27];
   // create entry timestamp string
   sprintf(entry, "%04u-%02u-%02uT%02u:%02u:%02u+02:00,", now.year(), now.month(), now.day(), now.hour(), now.minute(), now.second());
   // write timestamp and id to file
